@@ -11,7 +11,6 @@ import (
 	"github.com/Beneford_IV/udemy_app/pkg/models"
 )
 
-var funjctinMap = template.FuncMap{}
 var app *config.AppConfig
 
 // Constructor for new Template Package
