@@ -30,6 +30,8 @@ func NewHandlers(r *Repository) {
 
 // All Handler functions require TWO arguements. A ResponseWriter and a Request
 func (h *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	h.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	render.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{})
 }
 
@@ -38,6 +40,10 @@ func (h *Repository) About(w http.ResponseWriter, r *http.Request) {
 	// perform some business logic
 	stringMap := make(map[string]string)
 	stringMap["test"] = "Hello, again."
+
+	remoteIP := h.App.Session.GetString(r.Context(), "remote_ip")
+
+	stringMap["remote_ip"] = remoteIP
 
 	td := models.TemplateData{
 		StringMap: stringMap,
